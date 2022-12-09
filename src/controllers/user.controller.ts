@@ -1,21 +1,25 @@
-import { RequestHandler } from "express";
+import { type RequestHandler } from 'express';
 
-import User, { IUser } from "~/models/User";
-import { jwt, hash, asyncHandler, ErrorResponse } from "~/utils";
+import User, { type IUser } from '~/models/User';
+import { jwt, hash, asyncHandler, ErrorResponse } from '~/utils';
 
-const getPayLoad = (user: IUser) => {
-  return {
-    id: user.id,
-  };
-};
+const getPayLoad = (user: IUser) => ({
+  id: user.id,
+});
 
 const login = asyncHandler(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
 
-  if (!user) return next(new ErrorResponse("Invalid Credentials", 400));
+  if (user == null) {
+    next(new ErrorResponse('Invalid Credentials', 400));
+    return;
+  }
 
   const match = await hash.compare(req.body.password, user.password);
-  if (!match) return next(new ErrorResponse("Invalid Credentails", 400));
+  if (!match) {
+    next(new ErrorResponse('Invalid Credentails', 400));
+    return;
+  }
 
   const payload = getPayLoad(user);
   const token = jwt.generate(payload);
@@ -24,8 +28,10 @@ const login = asyncHandler(async (req, res, next) => {
 });
 
 const signup: RequestHandler = asyncHandler(async (req, res, next) => {
-  if (await User.findOne({ email: req.body.email }))
-    return next(new ErrorResponse("User already exists", 400));
+  if ((await User.findOne({ email: req.body.email })) != null) {
+    next(new ErrorResponse('User already exists', 400));
+    return;
+  }
 
   const { name, email, password } = req.body;
 
