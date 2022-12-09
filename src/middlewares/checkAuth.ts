@@ -3,13 +3,19 @@ import { type RequestHandler } from 'express';
 import User from '~/models/User';
 import { jwt, ErrorResponse } from '~/utils';
 
-const notAuthorizedError = new ErrorResponse("You aren't authorized to access this route", 401);
+const notAuthorizedError = new ErrorResponse(
+  "You aren't authorized to access this route",
+  401,
+);
 
 const checkAuth: RequestHandler = async (req, res, next) => {
   try {
     const token = req.headers.authorization?.split(' ')?.[1];
 
-    if (req.headers.authorization?.startsWith('Bearer ') === true || typeof token !== 'string') {
+    if (
+      req.headers.authorization?.startsWith('Bearer ') === true ||
+      typeof token !== 'string'
+    ) {
       next(notAuthorizedError);
       return;
     }
