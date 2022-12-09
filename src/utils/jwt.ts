@@ -7,7 +7,7 @@ interface Payload {
 const secret = process.env.JWTSECRET;
 
 if (!secret) {
-  throw new Error(`Please provide JWT_SECRET as environment variable`);
+  throw new Error(`Please provide "JWT_SECRET" as environment variable`);
 }
 
 const generate = (payload: Payload) => {
