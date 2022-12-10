@@ -4,7 +4,7 @@ import { asyncHandler, ErrorResponse, errors } from '~/utils';
 const getNews = asyncHandler(async (req, res, next) => {
   const news = await News.findById(req.params.id);
 
-  if (news === null) return next(new ErrorResponse('Invalid news id', 400));
+  if (news === null) return next(new ErrorResponse('News not found', 404));
 
   return res.json({ success: true, news });
 });
