@@ -12,8 +12,13 @@
     "strict": true,
     "skipLibCheck": true,
     "paths": {
-      "~/*": ["./src/*"]
-    }
+      "~/*": ["src/*"]
+    },
+    "plugins": [{ "transform": "typescript-transform-paths" }]
+  },
+  "ts-node": {
+    "transpileOnly": true,
+    "require": ["typescript-transform-paths/register"]
   },
   "include": ["./src"]
 }

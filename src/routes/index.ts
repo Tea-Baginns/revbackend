@@ -8,6 +8,8 @@ const router = Router();
 router.use('/api/user', userRoutes);
 router.use('/api/news', newsRoutes);
 
-router.use((_, res) => res.status(404).json({ success: false }));
+router.use((_, res) => {
+  res.status(404).json({ success: false });
+});
 
 export default router;

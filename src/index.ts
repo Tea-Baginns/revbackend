@@ -1,7 +1,3 @@
-import 'module-alias/register';
-import path from 'path';
-import dotenv from 'dotenv';
-
 import cors from 'cors';
 import morgan from 'morgan';
 import express from 'express';
@@ -9,10 +5,6 @@ import express from 'express';
 import routes from '~/routes';
 import { connectToDB } from '~/utils';
 import { handleError } from '~/middlewares';
-
-dotenv.config({
-  path: path.resolve(process.cwd(), '.env'),
-});
 
 declare global {
   namespace Express {

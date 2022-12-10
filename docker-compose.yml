@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+  dev:
+    build: .
+    working_dir: /app
+    env_file:
+      - .env
+    volumes:
+      - ./src:/app/src/
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "${PORT}:${PORT}"
+    links:
+      - mongodb
+
+  prod:
+    build: .
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+    ports:
+      - "${PORT}:${PORT}"
+
+  mongodb:
+    image: mongo
+    volumes:
+      - mongodb-data:/data/db
+
+volumes:
+  mongodb-data:

@@ -7,12 +7,14 @@
     "test": "echo \"No Test Written\"",
     "build": "tsc",
     "watch": "tsc -w",
-    "start": "node dist/index.js",
+    "start": "node -r dotenv/config dist/index.js",
+    "start:dev2": "npm run build && concurrently \"npm run watch\" \"npm run dev\"",
+    "start:dev": "nodemon -L --ext ts --exec ts-node -r dotenv/config src/index.ts",
     "dev": "nodemon dist/index.js",
     "clean": "rimraf dist",
     "eslint": "eslint --fix src",
     "prettier": "prettier --write src",
-    "prepare": "husky install"
+    "prepare": "husky install && ts-patch install -s"
   },
   "keywords": [],
   "author": "",
@@ -36,6 +38,7 @@
     "@types/node": "^18.11.12",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.46.0",
+    "concurrently": "^7.6.0",
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-standard-with-typescript": "^23.0.0",
@@ -47,9 +50,9 @@
     "nodemon": "^2.0.20",
     "prettier": "^2.8.1",
     "rimraf": "^3.0.2",
-    "typescript": "*"
-  },
-  "_moduleAliases": {
-    "~": "dist"
+    "ts-node": "^10.9.1",
+    "ts-patch": "^2.1.0",
+    "typescript": "*",
+    "typescript-transform-paths": "^3.4.4"
   }
 }
