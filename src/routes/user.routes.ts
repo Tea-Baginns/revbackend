@@ -29,6 +29,8 @@ router.post(
   userControllers.login,
 );
 
+router.post('/save/:id', userControllers.bookmark);
+
 function notEmpty(name: string, message: string) {
   return check(name).trim().notEmpty().withMessage(message);
 }

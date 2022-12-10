@@ -8,6 +8,7 @@ export type IUser = {
   email: string;
   password: string;
   role: Roles;
+  bookmarks: string[];
 } & Document;
 
 const userSchema = new mongoose.Schema(
@@ -32,6 +33,7 @@ const userSchema = new mongoose.Schema(
       enum: ['admin', 'moderator', 'reader', 'writer'],
       default: 'reader',
     },
+    bookmarks: [{ type: mongoose.Types.ObjectId, ref: 'News' }],
   },
   {
     timestamps: true,

@@ -1,4 +1,5 @@
 import { type RequestHandler } from 'express';
+import News from '~/models/News';
 
 import User, { type IUser } from '~/models/User';
 import { jwt, hash, asyncHandler, ErrorResponse } from '~/utils';
@@ -48,4 +49,17 @@ const signup: RequestHandler = asyncHandler(async (req, res, next) => {
   return res.status(201).json({ success: true, token });
 });
 
-export default { login, signup };
+const bookmark = asyncHandler(async (req, res, next) => {
+  const news = await News.findById(req.params.id);
+  if (news === null) return next(new ErrorResponse('Invalid news id', 400));
+
+  const user = (await User.findById(req.params.id))!;
+
+  if (user.bookmarks.includes(news.id))
+    await news.updateOne({ $pull: { bookmarks: [news.id] } });
+  else await news.updateOne({ $push: { bookmarks: [news.id] } });
+
+  return res.json({ success: true });
+});
+
+export default { login, signup, bookmark };
