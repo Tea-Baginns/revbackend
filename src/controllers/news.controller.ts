@@ -67,10 +67,16 @@ const voteNews = asyncHandler(async (req, res, next) => {
   if (news === null) return next(new ErrorResponse('Invalid news id', 400));
 
   if (req.body.type === 'upvote') {
+    if (news.downvotes.includes(req.user.id))
+      await news.updateOne({ $pull: { downvotes: [req.user.id] } });
+
     if (news.upvotes.includes(req.user.id))
       await news.updateOne({ $pull: { upvotes: [req.user.id] } });
     else await news.updateOne({ $push: { upvotes: [req.user.id] } });
   } else {
+    if (news.upvotes.includes(req.user.id))
+      await news.updateOne({ $pull: { upvotes: [req.user.id] } });
+
     if (news.downvotes.includes(req.user.id))
       await news.updateOne({ $pull: { downvotes: [req.user.id] } });
     else await news.updateOne({ $push: { downvotes: [req.user.id] } });
