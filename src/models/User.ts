@@ -9,6 +9,7 @@ export type IUser = {
   password: string;
   role: Roles;
   bookmarks: string[];
+  follows: string[];
 } & Document;
 
 const userSchema = new mongoose.Schema(
@@ -34,6 +35,7 @@ const userSchema = new mongoose.Schema(
       default: 'reader',
     },
     bookmarks: [{ type: mongoose.Types.ObjectId, ref: 'News' }],
+    follows: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
   },
   {
     timestamps: true,

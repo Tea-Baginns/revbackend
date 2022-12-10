@@ -73,4 +73,18 @@ const voteNews = asyncHandler(async (req, res, next) => {
   return res.json({ success: true });
 });
 
-export default { login, signup, voteNews };
+const followUser = asyncHandler(async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+  if (user === null) return next(new ErrorResponse('Invalid news id', 400));
+
+  const curUser = (await User.findById(req.user.id))!;
+  if (curUser.follows.includes(user.id)) {
+    await curUser.updateOne({ $pull: { follows: [user.id] } });
+  } else {
+    await curUser.updateOne({ $push: { follows: [user.id] } });
+  }
+
+  return res.json({ success: true });
+});
+
+export default { login, signup, voteNews, followUser };
