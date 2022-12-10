@@ -31,6 +31,8 @@ router.post(
 
 router.post('/vote/:id', userControllers.voteNews);
 
+router.post('/follow/:id', userControllers.followUser);
+
 function notEmpty(name: string, message: string) {
   return check(name).trim().notEmpty().withMessage(message);
 }
