@@ -12,8 +12,6 @@ router.post(
   newsControllers.createNews,
 );
 
-router.post('/vote/:id', newsControllers.voteNews);
-
 router
   .route('/:id')
   .get(newsControllers.getNews)
@@ -27,5 +25,7 @@ router
     checkRole(['writer', 'admin', 'moderator']),
     newsControllers.deleteNews,
   );
+
+router.post('/save/:id', newsControllers.bookmark);
 
 export default router;
