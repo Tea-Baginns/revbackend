@@ -1,16 +1,29 @@
 import { Router } from 'express';
 
-import { checkAuth } from '~/middlewares';
+import { checkAuth, checkRole } from '~/middlewares';
 import newsControllers from '~/controllers/news.controller';
 
 const router = Router();
 
-router.post('/', checkAuth, newsControllers.createNews);
+router.post(
+  '/',
+  checkAuth,
+  checkRole(['writer', 'admin', 'moderator']),
+  newsControllers.createNews,
+);
 
 router
   .route('/:id')
   .get(newsControllers.getNews)
-  .patch(checkAuth, newsControllers.updateNews)
-  .delete(checkAuth, newsControllers.deleteNews);
+  .patch(
+    checkAuth,
+    checkRole(['writer', 'admin', 'moderator']),
+    newsControllers.updateNews,
+  )
+  .delete(
+    checkAuth,
+    checkRole(['writer', 'admin', 'moderator']),
+    newsControllers.deleteNews,
+  );
 
 export default router;
