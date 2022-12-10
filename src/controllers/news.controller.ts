@@ -1,4 +1,5 @@
 import News from '~/models/News';
+import User from '~/models/User';
 import { asyncHandler, ErrorResponse, errors } from '~/utils';
 
 const getNews = asyncHandler(async (req, res, next) => {
@@ -61,32 +62,27 @@ const deleteNews = asyncHandler(async (req, res, next) => {
   return res.json({ success: true });
 });
 
-const voteNews = asyncHandler(async (req, res, next) => {
-  const news = await News.findById(req.params.id);
-
-  if (news === null) return next(new ErrorResponse('Invalid news id', 400));
-
-  if (req.body.type === 'upvote') {
-    if (news.downvotes.includes(req.user.id))
-      await news.updateOne({ $pull: { downvotes: [req.user.id] } });
-
-    if (news.upvotes.includes(req.user.id))
-      await news.updateOne({ $pull: { upvotes: [req.user.id] } });
-    else await news.updateOne({ $push: { upvotes: [req.user.id] } });
-  } else {
-    if (news.upvotes.includes(req.user.id))
-      await news.updateOne({ $pull: { upvotes: [req.user.id] } });
-
-    if (news.downvotes.includes(req.user.id))
-      await news.updateOne({ $pull: { downvotes: [req.user.id] } });
-    else await news.updateOne({ $push: { downvotes: [req.user.id] } });
-  }
-
-  return res.json({ success: true });
-});
-
 function ifUpdate(name: string, news: any, body: any) {
   if (typeof body[name] === 'string') news[name] = body[name];
 }
 
-export default { getNews, createNews, updateNews, deleteNews, voteNews };
+const bookmark = asyncHandler(async (req, res, next) => {
+  const news = await News.findById(req.params.id);
+  if (news === null) return next(new ErrorResponse('Invalid news id', 400));
+
+  const user = (await User.findById(req.params.id))!;
+
+  if (user.bookmarks.includes(news.id))
+    await news.updateOne({ $pull: { bookmarks: [news.id] } });
+  else await news.updateOne({ $push: { bookmarks: [news.id] } });
+
+  return res.json({ success: true });
+});
+
+export default {
+  getNews,
+  createNews,
+  updateNews,
+  deleteNews,
+  bookmark,
+};
