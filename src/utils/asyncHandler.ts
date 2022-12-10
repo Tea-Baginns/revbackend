@@ -1,14 +1,14 @@
 import { validationResult } from 'express-validator';
 import type { NextFunction, RequestHandler, Request, Response } from 'express';
 
-import ErrorResponse from '~/utils/ErrorResponse';
+import { errors } from '~/utils';
 
 const asyncHandler =
   (fn: RequestHandler) => (req: Request, res: Response, next: NextFunction) => {
-    const errors = validationResult(req);
+    const valErrors = validationResult(req);
 
-    if (!errors.isEmpty()) {
-      const errs = errors.array().map(({ msg, param }) => ({ msg, param }));
+    if (!valErrors.isEmpty()) {
+      const errs = valErrors.array().map(({ msg, param }) => ({ msg, param }));
       return res.status(400).send({ success: false, errors: errs });
     }
 
@@ -16,7 +16,7 @@ const asyncHandler =
       console.log('[caught by asyncHandler]: ');
       console.log(err.message);
 
-      next(new ErrorResponse('Something went wrong', 500));
+      next(errors.generic);
     });
   };
 

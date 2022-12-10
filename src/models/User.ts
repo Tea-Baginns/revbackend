@@ -1,10 +1,13 @@
 import mongoose from 'mongoose';
 import type { Document, Model } from 'mongoose';
 
+import { Roles } from '~/types';
+
 export type IUser = {
   name: string;
   email: string;
   password: string;
+  role: Roles;
 } & Document;
 
 const userSchema = new mongoose.Schema(
@@ -23,6 +26,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+    },
+    role: {
+      type: String,
+      enum: ['admin', 'moderator', 'reader', 'writer'],
+      default: 'reader',
     },
   },
   {

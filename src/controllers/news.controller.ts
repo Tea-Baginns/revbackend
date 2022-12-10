@@ -1,5 +1,5 @@
 import News from '~/models/News';
-import { asyncHandler, ErrorResponse } from '~/utils';
+import { asyncHandler, ErrorResponse, errors } from '~/utils';
 
 const getNews = asyncHandler(async (req, res, next) => {
   const news = await News.findById(req.params.id);
@@ -29,10 +29,7 @@ const updateNews = asyncHandler(async (req, res, next) => {
 
   if (news === null) return next(new ErrorResponse('Invalid news id', 400));
 
-  if (news.author !== req.user.id)
-    return next(
-      new ErrorResponse('You are not authorized to edit this news', 401),
-    );
+  if (news.author !== req.user.id) return next(errors.authorization);
 
   ifUpdate('title_en', news, req.body);
   ifUpdate('title_np', news, req.body);
@@ -49,10 +46,7 @@ const deleteNews = asyncHandler(async (req, res, next) => {
 
   if (news === null) return next(new ErrorResponse('Invalid news id', 400));
 
-  if (news.author !== req.user.id)
-    return next(
-      new ErrorResponse('You are not authorized to delete this news', 401),
-    );
+  if (news.author !== req.user.id) return next(errors.authorization);
 
   await News.deleteOne({ id: req.params.id });
 
