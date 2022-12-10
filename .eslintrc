@@ -4,7 +4,11 @@
     "es2021": true,
     "node": true
   },
-  "extends": ["standard-with-typescript", "prettier", "plugin:prettier/recommended"],
+  "extends": [
+    "standard-with-typescript",
+    "prettier",
+    "plugin:prettier/recommended"
+  ],
   "overrides": [],
   "parserOptions": {
     "ecmaVersion": "latest",
@@ -13,6 +17,7 @@
   "rules": {
     "@typescript-eslint/no-misused-promises": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/no-namespace": "off"
+    "@typescript-eslint/no-namespace": "off",
+    "@typescript-eslint/restrict-plus-operands": "off"
   }
 }

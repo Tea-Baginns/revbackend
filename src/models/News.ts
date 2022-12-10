@@ -10,6 +10,8 @@ export type INews = {
   audio_np: string;
   category: string[];
   author: string;
+  upvotes: string[];
+  downvotes: String[];
 } & Document;
 
 const newsSchema = new mongoose.Schema(
@@ -30,6 +32,8 @@ const newsSchema = new mongoose.Schema(
       required: true,
       ref: 'User',
     },
+    upvotes: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
+    downvotes: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
   },
   {
     timestamps: true,

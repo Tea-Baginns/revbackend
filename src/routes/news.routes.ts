@@ -12,6 +12,8 @@ router.post(
   newsControllers.createNews,
 );
 
+router.patch('/:id/vote', newsControllers.voteNews);
+
 router
   .route('/:id')
   .get(newsControllers.getNews)
