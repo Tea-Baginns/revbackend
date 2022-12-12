@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 
+import { checkAuth } from '~/middlewares';
 import userControllers from '~/controllers/user.controller';
 
 const router = Router();
@@ -29,9 +30,9 @@ router.post(
   userControllers.login,
 );
 
-router.post('/vote/:id', userControllers.voteNews);
+router.post('/vote/:id', checkAuth, userControllers.voteNews);
 
-router.post('/follow/:id', userControllers.followUser);
+router.post('/follow/:id', checkAuth, userControllers.followUser);
 
 function notEmpty(name: string, message: string) {
   return check(name).trim().notEmpty().withMessage(message);
