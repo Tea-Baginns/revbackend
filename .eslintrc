@@ -12,7 +12,7 @@
   "overrides": [],
   "parserOptions": {
     "ecmaVersion": "latest",
-    "project": ["tsconfig.json"]
+    "project": "./tsconfig.eslint.json"
   },
   "rules": {
     "@typescript-eslint/no-misused-promises": "off",

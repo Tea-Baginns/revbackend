@@ -20,6 +20,7 @@ const createNews = asyncHandler(async (req, res) => {
     content_np: data.content_np,
     category: data.category,
     author: req.user.id,
+    image: data.image_url,
   });
 
   res.status(201).json({ success: true, news });

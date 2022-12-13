@@ -11,11 +11,13 @@ export type INews = {
   category: string[];
   author: string;
   upvotes: string[];
+  image: string;
   downvotes: String[];
 } & Document;
 
 const newsSchema = new mongoose.Schema(
   {
+    image: String,
     title_en: String,
     title_np: String,
 

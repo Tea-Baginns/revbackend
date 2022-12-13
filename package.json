@@ -36,6 +36,7 @@
     "@types/jsonwebtoken": "^8.5.9",
     "@types/morgan": "^1.9.3",
     "@types/node": "^18.11.12",
+    "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.46.0",
     "concurrently": "^7.6.0",
@@ -50,9 +51,11 @@
     "nodemon": "^2.0.20",
     "prettier": "^2.8.1",
     "rimraf": "^3.0.2",
+    "supertest": "^6.3.3",
     "ts-node": "^10.9.1",
     "ts-patch": "^2.1.0",
-    "typescript": "*",
-    "typescript-transform-paths": "^3.4.4"
+    "typescript": "^4.9.4",
+    "typescript-transform-paths": "^3.4.4",
+    "vitest": "^0.25.7"
   }
 }
