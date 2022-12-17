@@ -34,12 +34,13 @@ const signup: RequestHandler = asyncHandler(async (req, res, next) => {
     return;
   }
 
-  const { name, email, password } = req.body;
+  const { name, email, password, role } = req.body;
 
   const hashedPassword = await hash.generate(password);
   const user = await User.create({
     name,
     email,
+    role,
     password: hashedPassword,
   });
 
