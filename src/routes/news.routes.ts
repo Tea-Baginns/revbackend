@@ -26,6 +26,6 @@ router
     newsControllers.deleteNews,
   );
 
-router.post('/save/:id', newsControllers.bookmark);
+router.post('/save/:id',checkAuth, newsControllers.bookmark);
 
 export default router;
