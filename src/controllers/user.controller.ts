@@ -56,19 +56,19 @@ const voteNews = asyncHandler(async (req, res, next) => {
   if (news === null) return next(new ErrorResponse('Invalid news id', 400));
 
   if (req.body.type === 'upvote') {
-    if (news.downvotes.includes(req.user.id))
-      await news.updateOne({ $pull: { downvotes: [req.user.id] } });
+    if (news.downvotes.includes(req.user._id))
+      await news.updateOne({ $pull: { downvotes: [req.user._id] } });
 
-    if (news.upvotes.includes(req.user.id))
-      await news.updateOne({ $pull: { upvotes: [req.user.id] } });
-    else await news.updateOne({ $push: { upvotes: [req.user.id] } });
+    if (news.upvotes.includes(req.user._id))
+      await news.updateOne({ $pull: { upvotes: [req.user._id] } });
+    else await news.updateOne({ $push: { upvotes: [req.user._id] } });
   } else {
-    if (news.upvotes.includes(req.user.id))
-      await news.updateOne({ $pull: { upvotes: [req.user.id] } });
+    if (news.upvotes.includes(req.user._id))
+      await news.updateOne({ $pull: { upvotes: [req.user._id] } });
 
-    if (news.downvotes.includes(req.user.id))
-      await news.updateOne({ $pull: { downvotes: [req.user.id] } });
-    else await news.updateOne({ $push: { downvotes: [req.user.id] } });
+    if (news.downvotes.includes(req.user._id))
+      await news.updateOne({ $pull: { downvotes: [req.user._id] } });
+    else await news.updateOne({ $push: { downvotes: [req.user._id] } });
   }
 
   return res.json({ success: true });
@@ -76,9 +76,9 @@ const voteNews = asyncHandler(async (req, res, next) => {
 
 const followUser = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.params.id);
-  if (user === null) return next(new ErrorResponse('Invalid news id', 400));
+  if (user === null) return next(new ErrorResponse('Invalid user id', 400));
 
-  const curUser = (await User.findById(req.user.id))!;
+  const curUser = (await User.findById(req.user._id))!;
   if (curUser.follows.includes(user.id)) {
     await curUser.updateOne({ $pull: { follows: [user.id] } });
   } else {

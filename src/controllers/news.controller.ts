@@ -32,7 +32,7 @@ const updateNews = asyncHandler(async (req, res, next) => {
   if (news === null) return next(new ErrorResponse('Invalid news id', 400));
 
   if (
-    news.author !== req.user.id &&
+    news.author !== req.user._id &&
     !['admin', 'moderator'].includes(req.user.role)
   )
     return next(errors.authorization);
@@ -53,7 +53,7 @@ const deleteNews = asyncHandler(async (req, res, next) => {
   if (news === null) return next(new ErrorResponse('Invalid news id', 400));
 
   if (
-    news.author !== req.user.id &&
+    news.author !== req.user._id &&
     !['admin', 'moderator'].includes(req.user.role)
   )
     return next(errors.authorization);
