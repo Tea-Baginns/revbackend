@@ -19,7 +19,7 @@ const createNews = asyncHandler(async (req, res) => {
     content_en: data.content_en,
     content_np: data.content_np,
     category: data.category,
-    author: req.user.id,
+    author: req.user._id,
     image: data.image_url,
   });
 

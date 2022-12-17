@@ -8,7 +8,7 @@ const checkAuth: RequestHandler = async (req, res, next) => {
     const token = req.headers.authorization?.split(' ')?.[1];
 
     if (
-      req.headers.authorization?.startsWith('Bearer ') === true ||
+      req.headers.authorization?.startsWith('Bearer ') === false ||
       typeof token !== 'string'
     ) {
       next(errors.authorization);
