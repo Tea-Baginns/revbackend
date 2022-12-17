@@ -71,7 +71,7 @@ const bookmark = asyncHandler(async (req, res, next) => {
   const news = await News.findById(req.params.id);
   if (news === null) return next(new ErrorResponse('Invalid news id', 400));
 
-  const user = (await User.findById(req.user.id))!;
+  const user = (await User.findById(req.user._id))!;
 
   if (user.bookmarks.includes(news.id))
     await news.updateOne({ $pull: { bookmarks: [news.id] } });
