@@ -32,7 +32,7 @@ async function main() {
   await connectToDB();
   const PORT = typeof process.env.PORT === 'number' ? process.env.PORT : 5000;
 
-  app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+  app.listen(PORT, '0.0.0.0', () => console.log(`Listening on port ${PORT}`));
 }
 
 main().catch(console.log);
